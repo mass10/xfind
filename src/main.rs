@@ -1,8 +1,25 @@
+fn fix_drive_path(s: &str) -> String {
+    if s.len() == 2 {
+        // "C:" のような場合
+        let first_letter = s.chars().nth(0).unwrap();
+        if !first_letter.is_ascii_alphabetic() {
+            return s.to_string();
+        }
+        let second_letter = s.chars().nth(1).unwrap();
+        if second_letter != ':' {
+            return s.to_string();
+        }
+        return format!("{}:\\", first_letter.to_ascii_uppercase()).to_string();
+    }
+    return s.to_string();
+}
+
 fn xfind(path: &str) {
-    let unknown = std::path::Path::new(path);
+    let path = fix_drive_path(path);
+    let unknown = std::path::Path::new(&path);
     // ディレクトリかどうか
     if unknown.is_dir() {
-        let name = unknown.file_name().unwrap();
+        let name = unknown.file_name().unwrap_or_default();
         if name == "node_modules" {
             return;
         }
