@@ -9,6 +9,12 @@ fn xfind(path: &str) {
         if name == ".git" {
             return;
         }
+        if name == ".dotnet" {
+            return;
+        }
+        if name == ".cargo" {
+            return;
+        }
         if name == ".node-gyp" {
             // ".node-gyp" は出力
             println!("directory: {}", path);
